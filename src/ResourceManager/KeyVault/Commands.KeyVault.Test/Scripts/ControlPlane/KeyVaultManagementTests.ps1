@@ -14,6 +14,39 @@
 
 #------------------------------New-AzureRmKeyVault--------------------------------------
 
+function Get-AllSecretPermissions 
+{
+	return @(
+		"get",
+		"list",
+		"set",
+		"delete",
+		"backup",
+		"restore",
+		"recover"
+	)
+}
+
+function Get-AllKeyPermissions
+{
+	return @(
+		"get",
+		"create",
+		"delete",
+		"list",
+		"update",
+		"import",
+		"backup",
+		"restore",
+		"recover",
+		"sign", 
+		"verify", 
+		"wrapKey",
+		"unwrapKey", 
+		"encrypt", 
+		"decrypt"
+	)
+}
 <#
 .SYNOPSIS
 Tests creating a new vault.
@@ -48,9 +81,9 @@ Param($rgName, $location, $tagName, $tagValue)
             "update",
             "import",
             "backup",
-            "restore")
-    $expectedPermsToSecrets = @("all")
-    $expectedPermsToSecrets = @("all")
+            "restore",
+			"recover")
+    $expectedPermsToSecrets = Get-AllSecretPermissions
     $expectedPermsToCertificates = @("all")
 
     Assert-AreEqual 1 @($actual.AccessPolicies).Count
@@ -83,6 +116,32 @@ function Test-CreateNewPremiumVaultEnabledForDeployment
     Assert-AreEqual $location $actual.Location
     Assert-AreEqual "Premium" $actual.Sku
     Assert-AreEqual $true $actual.EnabledForDeployment
+
+    if ($global:noADCmdLetMode) {return;}
+
+    Assert-AreEqual 1 @($actual.AccessPolicies).Count
+}
+
+<#
+.SYNOPSIS
+Tests creating a new premium vault with enableSoftDelete set to true.
+#>
+function Test-CreateNewStandardVaultEnableSoftDelete
+{
+    Param($rgName, $location)
+
+    # Setup
+    $vaultname = Get-VaultName
+
+    # Test
+    $actual = New-AzureRmKeyVault -VaultName $vaultName -ResourceGroupName $rgname -Location $location -Sku standard -EnableSoftDelete
+
+    # Assert
+    Assert-AreEqual $vaultName $actual.VaultName
+    Assert-AreEqual $rgname $actual.ResourceGroupName
+    Assert-AreEqual $location $actual.Location
+    Assert-AreEqual "Standard" $actual.Sku
+    Assert-AreEqual $true $actual.EnableSoftDelete
 
     if ($global:noADCmdLetMode) {return;}
 
@@ -415,7 +474,7 @@ function Test-ModifyAccessPolicy
     CheckVaultAccessPolicy $vault $PermToKeys $PermToSecrets $PermToCertificates
 
     # Change just the secrets perms
-    $PermToSecrets = @("all")
+    $PermToSecrets = Get-AllSecretPermissions
     $vault = Set-AzureRmKeyVaultAccessPolicy -VaultName $existingVaultName -ResourceGroupName $rgName -ObjectId $objId -PermissionsToSecrets $PermToSecrets -PassThru
     CheckVaultAccessPolicy $vault $PermToKeys $PermToSecrets $PermToCertificates
 
@@ -507,8 +566,6 @@ function Test-ModifyAccessPolicyNegativeCases
     Param($existingVaultName, $rgName, $objId)
 
     # "all" plus other perms
-    Assert-Throws { Set-AzureRmKeyVaultAccessPolicy -VaultName $existingVaultName -ResourceGroupName $rgName -ObjectId $objId -PermissionsToKeys get, all }
-    Assert-Throws { Set-AzureRmKeyVaultAccessPolicy -VaultName $existingVaultName -ResourceGroupName $rgName -ObjectId $objId -PermissionsToSecrets get, all }
     Assert-Throws { Set-AzureRmKeyVaultAccessPolicy -VaultName $existingVaultName -ResourceGroupName $rgName -ObjectId $objId -PermissionsToCertificates get, all }
 
     # random string in perms
@@ -548,6 +605,17 @@ function Test-CreateDeleteVaultWithPiping
 }
 
 #-------------------------------------------------------------------------------------
+
+function Test-AllPermissionExpansion
+{
+    Param($existingVaultName, $rgName)
+    $vault = Get-AzureRmKeyVault -VaultName $existingVaultName -ResourceGroupName $rgName
+    Assert-NotNull $vault
+    Assert-AreEqual 0 $vault.AccessPolicies.Count
+
+    $vault = Set-AzureRmKeyVaultAccessPolicy -VaultName $existingVaultName -ResourceGroupName $rgName -UserPrincipalName $upn -PermissionsToKeys all -PermissionsToSecrets all -PassThru
+	CheckVaultAccessPolicy $vault (Get-AllKeyPermissions) (Get-AllSecretPermissions) @()
+}
 
 function CheckVaultAccessPolicy
 {

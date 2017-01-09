@@ -114,3 +114,9 @@ Grants or modifies existing permissions for a user, application, or security gro
 ### [Stop-AzureKeyVaultCertificateOperation](Stop-AzureKeyVaultCertificateOperation.md)
 Cancels a certificate operation in key vault.
 
+### [Undo-AzureKeyVaultKeyRemoval](Undo-AzureKeyVaultKeyRemoval.md)
+Recovers a deleted key.
+
+### [Undo-AzureKeyVaultSecretRemoval](Undo-AzureKeyVaultSecretRemoval.md)
+Recovers a deleted secret.
+

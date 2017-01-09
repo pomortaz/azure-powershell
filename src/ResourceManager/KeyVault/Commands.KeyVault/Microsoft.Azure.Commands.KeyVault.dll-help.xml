@@ -1535,6 +1535,34 @@ Updated                         : 2/8/2016 11:10:29 PM</dev:code>
 <maml:uri /></dev:type>
 <dev:defaultValue>None</dev:defaultValue>
 </command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="KeyName"><maml:name>Name</maml:name>
+<maml:Description><maml:para>Specifies the name of the key bundle to get.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>InRemovedState</maml:name>
+<maml:Description><maml:para>Specifies whether to show the previously deleted keys in the output.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+<command:syntaxItem><maml:name>Get-AzureKeyVaultKey</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none"><maml:name>VaultName</maml:name>
+<maml:Description><maml:para>Specifies the name of the key vault from which this cmdlet gets keys. This cmdlet constructs the fully qualified domain name (FQDN) of a key vault based on the name that this parameter specifies and your selected environment.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
 <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="KeyName"><maml:name>Name</maml:name>
 <maml:Description><maml:para>Specifies the name of the key bundle to get.
 </maml:para>
@@ -1559,6 +1587,15 @@ Updated                         : 2/8/2016 11:10:29 PM</dev:code>
 <maml:Description><maml:para>Indicates that this cmdlet gets all versions of a key. The current version of a key is the first one on the list. If you specify this parameter you must also specify the Name and VaultName parameters.
 </maml:para>
 <maml:para>If you do not specify the IncludeVersions parameter, this cmdlet gets the current version of the key with the specified Name.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>InRemovedState</maml:name>
+<maml:Description><maml:para>Specifies whether to show the previously deleted keys in the output.
 </maml:para>
 </maml:Description>
 <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
@@ -1601,7 +1638,7 @@ Updated                         : 2/8/2016 11:10:29 PM</dev:code>
 </maml:description>
 </command:inputType>
 </command:inputTypes>
-<command:returnValues><command:returnValue><dev:type><maml:name>List&lt;Microsoft.Azure.Commands.KeyVault.Models.KeyBundle&gt;, Microsoft.Azure.Commands.KeyVault.Models.KeyBundle</maml:name>
+<command:returnValues><command:returnValue><dev:type><maml:name>List&lt;Microsoft.Azure.Commands.KeyVault.Models.KeyIdentityItem&gt;, Microsoft.Azure.Commands.KeyVault.Models.KeyBundle, List&lt;Microsoft.Azure.Commands.KeyVault.Models.DeletedKeyIdentityItem&gt;, Microsoft.Azure.Commands.KeyVault.Models.DeletedKeyBundle</maml:name>
 </dev:type>
 <maml:description><maml:para>
 </maml:para>
@@ -1636,6 +1673,18 @@ Updated                         : 2/8/2016 11:10:29 PM</dev:code>
 </maml:para>
 </dev:remarks>
 </command:example>
+<command:example><maml:title>Example 5: Get all the keys that have been deleted but not purged for this key vault.</maml:title>
+<dev:code>PS C:\&gt;Get-AzureKeyVaultKey -VaultName 'Contoso' -InRemovedState</dev:code>
+<dev:remarks><maml:para>This command gets all the keys that have been previously deleted, but not purged, in the key vault named Contoso.
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 6: Gets the key ITPfx that has been deleted but not purged for this key vault.</maml:title>
+<dev:code>PS C:\&gt;Get-AzureKeyVaultKey -VaultName 'Contoso' -KeyName 'ITPfx' -InRemovedState</dev:code>
+<dev:remarks><maml:para>This command gets the key ITPfx that has been previously deleted, but not purged, in the key vault named Contoso. This command will return metadata such as the deletion date, and the scheduled purging date of this deleted key.
+</maml:para>
+</dev:remarks>
+</command:example>
 </command:examples>
 <command:relatedLinks><maml:navigationLink><maml:linkText>Online Version:</maml:linkText>
 <maml:uri>http://go.microsoft.com/fwlink/?LinkId=690297</maml:uri>
@@ -1644,6 +1693,9 @@ Updated                         : 2/8/2016 11:10:29 PM</dev:code>
 <maml:uri></maml:uri>
 </maml:navigationLink>
 <maml:navigationLink><maml:linkText>Remove-AzureKeyVaultKey</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Undo-AzureKeyVaultKeyRemoval</maml:linkText>
 <maml:uri></maml:uri>
 </maml:navigationLink>
 <maml:navigationLink><maml:linkText>Set-AzureKeyVaultKeyAttribute</maml:linkText>
@@ -1702,6 +1754,34 @@ Updated                         : 2/8/2016 11:10:29 PM</dev:code>
 <maml:uri /></dev:type>
 <dev:defaultValue>None</dev:defaultValue>
 </command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="SecretName"><maml:name>Name</maml:name>
+<maml:Description><maml:para>Specifies the name of the secret to get.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>InRemovedState</maml:name>
+<maml:Description><maml:para>Specifies whether to show the previously deleted secrets in the output.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+<command:syntaxItem><maml:name>Get-AzureKeyVaultSecret</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none"><maml:name>VaultName</maml:name>
+<maml:Description><maml:para>Specifies the name of the key vault to which the secret belongs. This cmdlet constructs the fully qualified domain name (FQDN) of a key vault based on the name that this parameter specifies and your current environment.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
 <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="SecretName"><maml:name>Name</maml:name>
 <maml:Description><maml:para>Specifies the name of the secret to get.
 </maml:para>
@@ -1726,6 +1806,15 @@ Updated                         : 2/8/2016 11:10:29 PM</dev:code>
 <maml:Description><maml:para>Indicates that this cmdlet gets all versions of a secret. The current version of a secret is the first one on the list. If you specify this parameter you must also specify the Name and VaultName parameters.
 </maml:para>
 <maml:para>If you do not specify the IncludeVersions parameter, this cmdlet gets the current version of the secret with the specified Name.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>InRemovedState</maml:name>
+<maml:Description><maml:para>Specifies whether to show the previously deleted secrets in the output.
 </maml:para>
 </maml:Description>
 <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
@@ -1768,7 +1857,7 @@ Updated                         : 2/8/2016 11:10:29 PM</dev:code>
 </maml:description>
 </command:inputType>
 </command:inputTypes>
-<command:returnValues><command:returnValue><dev:type><maml:name>List&lt;Microsoft.Azure.Commands.KeyVault.Models.Secret&gt;, Microsoft.Azure.Commands.KeyVault.Models.Secret</maml:name>
+<command:returnValues><command:returnValue><dev:type><maml:name>List&lt;Microsoft.Azure.Commands.KeyVault.Models.SecretIdentityItem&gt;, Microsoft.Azure.Commands.KeyVault.Models.Secret, List&lt;Microsoft.Azure.Commands.KeyVault.Models.DeletedSecretIdentityItem&gt;, Microsoft.Azure.Commands.KeyVault.Models.DeletedSecret</maml:name>
 </dev:type>
 <maml:description><maml:para>
 </maml:para>
@@ -1810,11 +1899,26 @@ PS C:\&gt; Write-Host "Secret Value is: " $secret.SecretValueText</dev:code>
 </maml:para>
 </dev:remarks>
 </command:example>
+<command:example><maml:title>Example 6: Get all the keys that have been deleted but not purged for this key vault.</maml:title>
+<dev:code>PS C:\&gt;Get-AzureKeyVaultSecret -VaultName 'Contoso' -InRemovedState</dev:code>
+<dev:remarks><maml:para>This command gets all the secrets that have been previously deleted, but not purged, in the key vault named Contoso.
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 7: Gets the secret ITSecret that has been deleted but not purged for this key vault.</maml:title>
+<dev:code>PS C:\&gt;Get-AzureKeyVaultSecret -VaultName 'Contoso' -KeyName 'ITSecret' -InRemovedState</dev:code>
+<dev:remarks><maml:para>This command gets the secret ITSecret that has been previously deleted, but not purged, in the key vault named Contoso. This command will return metadata such as the deletion date, and the scheduled purging date of this deleted secret.
+</maml:para>
+</dev:remarks>
+</command:example>
 </command:examples>
 <command:relatedLinks><maml:navigationLink><maml:linkText>Online Version:</maml:linkText>
 <maml:uri>http://go.microsoft.com/fwlink/?LinkId=690298</maml:uri>
 </maml:navigationLink>
 <maml:navigationLink><maml:linkText>Remove-AzureKeyVaultSecret</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Undo-AzureKeyVaultSecretRemoval</maml:linkText>
 <maml:uri></maml:uri>
 </maml:navigationLink>
 <maml:navigationLink><maml:linkText>Set-AzureKeyVaultSecret</maml:linkText>
@@ -3762,7 +3866,7 @@ Updated     : 2/8/2016 11:29:33 PM</dev:code>
 </maml:para>
 </maml:description>
 </command:details>
-<maml:description><maml:para>The Remove-AzureKeyVaultKey cmdlet deletes a key in a key vault. This cmdlet has a value of high for the ConfirmImpact property.
+<maml:description><maml:para>The Remove-AzureKeyVaultKey cmdlet deletes a key in a key vault. If the key was accidentally deleted the key can be recovered using Undo-AzureKeyVaultKeyRemoval by a user with special 'recover' permissions. This cmdlet has a value of high for the ConfirmImpact property.
 </maml:para>
 </maml:description>
 <command:syntax><command:syntaxItem><maml:name>Remove-AzureKeyVaultKey</maml:name>
@@ -3792,6 +3896,14 @@ Updated     : 2/8/2016 11:29:33 PM</dev:code>
 <maml:uri /></dev:type>
 <dev:defaultValue>False</dev:defaultValue>
 </command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>InRemovedState</maml:name>
+<maml:Description><maml:para>Remove the previously deleted key permanently.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
 <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>PassThru</maml:name>
 <maml:Description><maml:para>Indicates that this cmdlet returns a Microsoft.Azure.Commands.KeyVault.Models.KeyBundle object. By default, this cmdlet does not generate any output.
 </maml:para>
@@ -3820,6 +3932,15 @@ Updated     : 2/8/2016 11:29:33 PM</dev:code>
 </command:syntax>
 <command:parameters><command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>Force</maml:name>
 <maml:Description><maml:para>Forces the command to run without asking for user confirmation.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>InRemovedState</maml:name>
+<maml:Description><maml:para>Remove the previously deleted key permanently.
 </maml:para>
 </maml:Description>
 <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
@@ -3880,7 +4001,7 @@ Updated     : 2/8/2016 11:29:33 PM</dev:code>
 </maml:description>
 </command:inputType>
 </command:inputTypes>
-<command:returnValues><command:returnValue><dev:type><maml:name>Microsoft.Azure.Commands.KeyVault.Models.KeyBundle</maml:name>
+<command:returnValues><command:returnValue><dev:type><maml:name>Microsoft.Azure.Commands.KeyVault.Models.DeletedKeyBundle</maml:name>
 </dev:type>
 <maml:description><maml:para>This cmdlet returns a value only if you specify the PassThru parameter.
 </maml:para>
@@ -3903,7 +4024,13 @@ Updated     : 2/8/2016 11:29:33 PM</dev:code>
 </maml:para>
 </dev:remarks>
 </command:example>
-<command:example><maml:title>Example 3: Remove keys by using the pipeline operator</maml:title>
+<command:example><maml:title>Example 3: Purge a deleted key from the key vault permanently</maml:title>
+<dev:code>PS C:\&gt;Remove-AzureKeyVaultKey -VaultName 'Contoso' -Name 'ITSoftware' -InRemovedState</dev:code>
+<dev:remarks><maml:para>This command removes the key named ITSoftware from the key vault named Contoso permanently. This flag requires the user to have special 'purge' persmissions on the key vault.
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 4: Remove keys by using the pipeline operator</maml:title>
 <dev:code>PS C:\&gt;Get-AzureKeyVaultKey -VaultName 'Contoso' | Where-Object {$_.Attributes.Enabled -eq $False} | Remove-AzureKeyVaultKey</dev:code>
 <dev:remarks><maml:para>This command gets all the keys in the key vault named Contoso, and passes them to the Where-Object cmdlet by using the pipeline operator. That cmdlet passes the keys that have a value of $False for the Enabled attribute to the current cmdlet. That cmdlet removes those keys.
 </maml:para>
@@ -3922,6 +4049,9 @@ Updated     : 2/8/2016 11:29:33 PM</dev:code>
 <maml:navigationLink><maml:linkText>Set-AzureKeyVaultKeyAttribute</maml:linkText>
 <maml:uri></maml:uri>
 </maml:navigationLink>
+<maml:navigationLink><maml:linkText>Undo-AzureKeyVaultKeyRemoval</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
 </command:relatedLinks>
 </command:command>
 <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
@@ -3932,7 +4062,7 @@ Updated     : 2/8/2016 11:29:33 PM</dev:code>
 </maml:para>
 </maml:description>
 </command:details>
-<maml:description><maml:para>The Remove-AzureKeyVaultSecret cmdlet deletes a secret in a key vault. This cmdlet has a value of high for the ConfirmImpact property.
+<maml:description><maml:para>The Remove-AzureKeyVaultSecret cmdlet deletes a secret in a key vault. If the secret was accidentally deleted the secret can be recovered using Undo-AzureKeyVaultSecretRemoval by a user with special 'recover' permissions. This cmdlet has a value of high for the ConfirmImpact property.
 </maml:para>
 </maml:description>
 <command:syntax><command:syntaxItem><maml:name>Remove-AzureKeyVaultSecret</maml:name>
@@ -3956,6 +4086,14 @@ Updated     : 2/8/2016 11:29:33 PM</dev:code>
 </command:parameter>
 <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>Force</maml:name>
 <maml:Description><maml:para>Forces the command to run without asking for user confirmation.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>InRemovedState</maml:name>
+<maml:Description><maml:para>If present, removes the previously deleted secret permanently.
 </maml:para>
 </maml:Description>
 <dev:type><maml:name>SwitchParameter</maml:name>
@@ -3990,6 +4128,15 @@ Updated     : 2/8/2016 11:29:33 PM</dev:code>
 </command:syntax>
 <command:parameters><command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>Force</maml:name>
 <maml:Description><maml:para>Forces the command to run without asking for user confirmation.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>InRemovedState</maml:name>
+<maml:Description><maml:para>If present, removes the previously deleted secret permanently.
 </maml:para>
 </maml:Description>
 <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
@@ -4050,7 +4197,7 @@ Updated     : 2/8/2016 11:29:33 PM</dev:code>
 </maml:description>
 </command:inputType>
 </command:inputTypes>
-<command:returnValues><command:returnValue><dev:type><maml:name>Microsoft.Azure.Commands.KeyVault.Models.Secret</maml:name>
+<command:returnValues><command:returnValue><dev:type><maml:name>Microsoft.Azure.Commands.KeyVault.Models.DeletedSecret</maml:name>
 </dev:type>
 <maml:description><maml:para>This cmdlet returns a value only if you specify the PassThru parameter.
 </maml:para>
@@ -4073,6 +4220,12 @@ Updated     : 2/8/2016 11:29:33 PM</dev:code>
 </maml:para>
 </dev:remarks>
 </command:example>
+<command:example><maml:title>Example 3: Purge deleted secret from the key vault permanently</maml:title>
+<dev:code>PS C:\&gt;Remove-AzureKeyVaultSecret -VaultName 'Contoso' -Name 'FinanceSecret' -InRemovedState</dev:code>
+<dev:remarks><maml:para>This command removes the secret named FinanceSecret from the key vault named Contoso permanently. This flag requires the user to have special 'purge' persmissions on the key vault.
+</maml:para>
+</dev:remarks>
+</command:example>
 </command:examples>
 <command:relatedLinks><maml:navigationLink><maml:linkText>Online Version:</maml:linkText>
 <maml:uri>http://go.microsoft.com/fwlink/?LinkId=690300</maml:uri>
@@ -4081,6 +4234,9 @@ Updated     : 2/8/2016 11:29:33 PM</dev:code>
 <maml:uri></maml:uri>
 </maml:navigationLink>
 <maml:navigationLink><maml:linkText>Set-AzureKeyVaultSecret</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Undo-AzureKeyVaultSecretRemoval</maml:linkText>
 <maml:uri></maml:uri>
 </maml:navigationLink>
 </command:relatedLinks>
@@ -7541,6 +7697,502 @@ ErrorMessage              :</dev:code>
 <maml:uri></maml:uri>
 </maml:navigationLink>
 <maml:navigationLink><maml:linkText>Remove-AzureKeyVaultCertificateOperation</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+</command:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>Undo-AzureKeyVaultKeyRemoval</command:name>
+<command:verb>Undo</command:verb>
+<command:noun>AzureKeyVaultKeyRemoval</command:noun>
+<maml:description><maml:para>Recovers a deleted key in a key vault into an active state.
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>The Undo-AzureKeyVaultKeyRemoval cmdlet will recover a previously deleted key. The recovered key will be active and can be used for all normal key operations. Caller needs to have 'recover' permission in order to perform this operation.
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>Undo-AzureKeyVaultKeyRemoval</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none"><maml:name>VaultName</maml:name>
+<maml:Description><maml:para>Vault name. Cmdlet constructs the FQDN of a vault based on the name and currently selected environment.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="KeyName"><maml:name>Name</maml:name>
+<maml:Description><maml:para>Key name. Cmdlet constructs the FQDN of a key from vault name, currently selected environment and key name.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf"><maml:name>Confirm</maml:name>
+<maml:Description><maml:para>Prompts you for confirmation before running the cmdlet.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi"><maml:name>WhatIf</maml:name>
+<maml:Description><maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="KeyName"><maml:name>Name</maml:name>
+<maml:Description><maml:para>Key name. Cmdlet constructs the FQDN of a key from vault name, currently selected environment and key name.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none"><maml:name>VaultName</maml:name>
+<maml:Description><maml:para>Vault name. Cmdlet constructs the FQDN of a vault based on the name and currently selected environment.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf"><maml:name>Confirm</maml:name>
+<maml:Description><maml:para>Prompts you for confirmation before running the cmdlet.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi"><maml:name>WhatIf</maml:name>
+<maml:Description><maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes><command:inputType><dev:type><maml:name>System.String</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:inputType>
+</command:inputTypes>
+<command:returnValues><command:returnValue><dev:type><maml:name>Microsoft.Azure.Commands.KeyVault.Models.KeyBundle</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:returnValue>
+</command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>Example 1</maml:title>
+<dev:code>PS C:\&gt;Undo-AzureKeyVaultKeyRemoval -VaultName 'MyKeyVault' -Name 'MyKey'</dev:code>
+<dev:remarks><maml:para>This command will recover the key 'MyKey' that was previously deleted, into an active and usable state.
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks><maml:navigationLink><maml:linkText>https://msdn.microsoft.com/en-us/library/dn868052.aspx</maml:linkText>
+<maml:uri>https://msdn.microsoft.com/en-us/library/dn868052.aspx</maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Remove-AzureKeyVaultKey</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Add-AzureKeyVaultKey</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Get-AzureKeyVaultKey</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+</command:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>Undo-AzureKeyVaultKeyDeletion</command:name>
+<command:verb>Undo</command:verb>
+<command:noun>AzureKeyVaultKeyDeletion</command:noun>
+<maml:description><maml:para>Recovers a deleted key in a key vault into an active state.
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>The Undo-AzureKeyVaultKeyDeletion cmdlet will recover a previously deleted key. The recovered key will be active and can be used for all normal key operations. Caller needs to have 'recover' permission in order to perform this operation.
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>Undo-AzureKeyVaultKeyDeletion</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none"><maml:name>VaultName</maml:name>
+<maml:Description><maml:para>Vault name. Cmdlet constructs the FQDN of a vault based on the name and currently selected environment.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="KeyName"><maml:name>Name</maml:name>
+<maml:Description><maml:para>Key name. Cmdlet constructs the FQDN of a key from vault name, currently selected environment and key name.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf"><maml:name>Confirm</maml:name>
+<maml:Description><maml:para>Prompts you for confirmation before running the cmdlet.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi"><maml:name>WhatIf</maml:name>
+<maml:Description><maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="KeyName"><maml:name>Name</maml:name>
+<maml:Description><maml:para>Key name. Cmdlet constructs the FQDN of a key from vault name, currently selected environment and key name.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none"><maml:name>VaultName</maml:name>
+<maml:Description><maml:para>Vault name. Cmdlet constructs the FQDN of a vault based on the name and currently selected environment.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf"><maml:name>Confirm</maml:name>
+<maml:Description><maml:para>Prompts you for confirmation before running the cmdlet.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi"><maml:name>WhatIf</maml:name>
+<maml:Description><maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes><command:inputType><dev:type><maml:name>System.String</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:inputType>
+</command:inputTypes>
+<command:returnValues><command:returnValue><dev:type><maml:name>Microsoft.Azure.Commands.KeyVault.Models.KeyBundle</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:returnValue>
+</command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>Example 1</maml:title>
+<dev:code>PS C:\&gt;Undo-AzureKeyVaultKeyDeletion -VaultName 'MyKeyVault' -Name 'MyKey'</dev:code>
+<dev:remarks><maml:para>This command will recover the key 'MyKey' that was previously deleted, into an active and usable state.
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks><maml:navigationLink><maml:linkText>https://msdn.microsoft.com/en-us/library/dn868052.aspx</maml:linkText>
+<maml:uri>https://msdn.microsoft.com/en-us/library/dn868052.aspx</maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Remove-AzureKeyVaultKey</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Add-AzureKeyVaultKey</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Get-AzureKeyVaultKey</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+</command:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>Undo-AzureKeyVaultSecretRemoval</command:name>
+<command:verb>Undo</command:verb>
+<command:noun>AzureKeyVaultSecretRemoval</command:noun>
+<maml:description><maml:para>Recovers a deleted secret in a key vault into an active state.
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>The Undo-AzureKeyVaultSecretRemoval cmdlet will recover a previously deleted secret. The recovered secret will be active and can be used for all normal secret operations. Caller needs to have 'recover' permission in order to perform this operation.
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>Undo-AzureKeyVaultSecretRemoval</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none"><maml:name>VaultName</maml:name>
+<maml:Description><maml:para>Vault name. Cmdlet constructs the FQDN of a vault based on the name and currently selected environment.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="SecretName"><maml:name>Name</maml:name>
+<maml:Description><maml:para>Secret name. Cmdlet constructs the FQDN of a secret from vault name, currently selected environment and secret name.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf"><maml:name>Confirm</maml:name>
+<maml:Description><maml:para>Prompts you for confirmation before running the cmdlet.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi"><maml:name>WhatIf</maml:name>
+<maml:Description><maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="SecretName"><maml:name>Name</maml:name>
+<maml:Description><maml:para>Secret name. Cmdlet constructs the FQDN of a secret from vault name, currently selected environment and secret name.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none"><maml:name>VaultName</maml:name>
+<maml:Description><maml:para>Vault name. Cmdlet constructs the FQDN of a vault based on the name and currently selected environment.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf"><maml:name>Confirm</maml:name>
+<maml:Description><maml:para>Prompts you for confirmation before running the cmdlet.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi"><maml:name>WhatIf</maml:name>
+<maml:Description><maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes><command:inputType><dev:type><maml:name>System.String</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:inputType>
+</command:inputTypes>
+<command:returnValues><command:returnValue><dev:type><maml:name>Microsoft.Azure.Commands.KeyVault.Models.Secret</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:returnValue>
+</command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>Example 1</maml:title>
+<dev:code>PS C:\&gt; Undo-AzureKeyVaultSecretRemoval -VaultName 'MyKeyVault' -Name 'MySecret'</dev:code>
+<dev:remarks><maml:para>This command will recover the secret 'MySecret' that was previously deleted, into an active and usable state.
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks><maml:navigationLink><maml:linkText>https://msdn.microsoft.com/en-us/library/dn868052.aspx</maml:linkText>
+<maml:uri>https://msdn.microsoft.com/en-us/library/dn868052.aspx</maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Remove-AzureKeyVaultSecret</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Add-AzureKeyVaultSecret</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Get-AzureKeyVaultSecret</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+</command:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>Undo-AzureKeyVaultSecretDeletion</command:name>
+<command:verb>Undo</command:verb>
+<command:noun>AzureKeyVaultSecretDeletion</command:noun>
+<maml:description><maml:para>Recovers a deleted secret in a key vault into an active state.
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>The Undo-AzureKeyVaultSecretDeletion cmdlet will recover a previously deleted secret. The recovered secret will be active and can be used for all normal secret operations. Caller needs to have 'recover' permission in order to perform this operation.
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>Undo-AzureKeyVaultSecretDeletion</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none"><maml:name>VaultName</maml:name>
+<maml:Description><maml:para>Vault name. Cmdlet constructs the FQDN of a vault based on the name and currently selected environment.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="SecretName"><maml:name>Name</maml:name>
+<maml:Description><maml:para>Secret name. Cmdlet constructs the FQDN of a secret from vault name, currently selected environment and secret name.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf"><maml:name>Confirm</maml:name>
+<maml:Description><maml:para>Prompts you for confirmation before running the cmdlet.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi"><maml:name>WhatIf</maml:name>
+<maml:Description><maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="SecretName"><maml:name>Name</maml:name>
+<maml:Description><maml:para>Secret name. Cmdlet constructs the FQDN of a secret from vault name, currently selected environment and secret name.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none"><maml:name>VaultName</maml:name>
+<maml:Description><maml:para>Vault name. Cmdlet constructs the FQDN of a vault based on the name and currently selected environment.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf"><maml:name>Confirm</maml:name>
+<maml:Description><maml:para>Prompts you for confirmation before running the cmdlet.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi"><maml:name>WhatIf</maml:name>
+<maml:Description><maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes><command:inputType><dev:type><maml:name>System.String</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:inputType>
+</command:inputTypes>
+<command:returnValues><command:returnValue><dev:type><maml:name>Microsoft.Azure.Commands.KeyVault.Models.Secret</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:returnValue>
+</command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>Example 1</maml:title>
+<dev:code>PS C:\&gt; Undo-AzureKeyVaultSecretDeletion -VaultName 'MyKeyVault' -Name 'MySecret'</dev:code>
+<dev:remarks><maml:para>This command will recover the secret 'MySecret' that was previously deleted, into an active and usable state.
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks><maml:navigationLink><maml:linkText>https://msdn.microsoft.com/en-us/library/dn868052.aspx</maml:linkText>
+<maml:uri>https://msdn.microsoft.com/en-us/library/dn868052.aspx</maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Remove-AzureKeyVaultSecret</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Add-AzureKeyVaultSecret</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Get-AzureKeyVaultSecret</maml:linkText>
 <maml:uri></maml:uri>
 </maml:navigationLink>
 </command:relatedLinks>
