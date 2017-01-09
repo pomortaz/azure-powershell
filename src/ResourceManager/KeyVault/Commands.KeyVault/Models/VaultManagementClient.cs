@@ -84,6 +84,7 @@ namespace Microsoft.Azure.Commands.KeyVault.Models
                         EnabledForDeployment = parameters.EnabledForDeployment,
                         EnabledForTemplateDeployment = parameters.EnabledForTemplateDeployment,
                         EnabledForDiskEncryption = parameters.EnabledForDiskEncryption,
+                        EnableSoftDelete = parameters.EnableSoftDelete ? true : (bool?)null,
                         TenantId = parameters.TenantId,
                         VaultUri = "",
                         AccessPolicies = (parameters.AccessPolicy != null) ? new[] { parameters.AccessPolicy } : new AccessPolicyEntry[] { }

@@ -29,6 +29,12 @@ function Test_CreateVaultPositionalParams
     Test-CreateVaultPositionalParams $global:resourceGroupName $global:location
 }
 
+function Test_CreateNewStandardVaultEnableSoftDelete
+{
+    Test-CreateNewStandardVaultEnableSoftDelete $global:resourceGroupName $global:location
+}
+
+
 #-------------------------------------------------------------------------------------
 
 #------------------------------Get-AzureRmKeyVault--------------------------------------
@@ -201,6 +207,13 @@ function Test_RemoveNonExistentAccessPolicyDoesNotThrow
     Reset-PreCreatedVault
     Test-RemoveNonExistentAccessPolicyDoesNotThrow $global:testVault $global:resourceGroupName $global:objectId
 }
+
+function Test_AllPermissionExpansion
+{
+    Reset-PreCreatedVault
+    Test-AllPermissionExpansion $global:testVault $global:resourceGroupName
+}
+
 #-------------------------------------------------------------------------------------
 
 
@@ -275,7 +288,6 @@ function Reset-PreCreatedVault
                     -ResourceName $global:testVault `
                     -ResourceGroupName $global:resourceGroupName `
                     -PropertyObject $vaultProperties  `
-                    -Tag  @{$tagName = $tagValue} `
                     -Force -Confirm:$false
 }
 
@@ -343,7 +355,6 @@ function Initialize-TemporaryState
     $keyVault = New-AzureRmResource @vaultId `
                 -PropertyObject $vaultProperties `
                 -Location $global:location `
-                -Tag @{$tagName = $tagValue} `
                 -Force -Confirm:$false
     if ($keyVault)
     {
