@@ -151,7 +151,7 @@ The cmdlet cannot import that key as software-protected key.
 Type: String
 Parameter Sets: Create
 Aliases: 
-Accepted values: HSM, Software
+Accepted values: HSM, Software, HSM, Software
 
 Required: True
 Position: Named
@@ -164,7 +164,7 @@ Accept wildcard characters: False
 Type: String
 Parameter Sets: Import
 Aliases: 
-Accepted values: HSM, Software
+Accepted values: HSM, Software, HSM, Software
 
 Required: False
 Position: Named
@@ -312,6 +312,32 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -Tag
+Specifies a hash table that contains certificate tags.
+
+To use HSM as your destination, you must have a key vault that supports HSMs.
+For more information about the service tiers and capabilities for Azure Key Vault, see the Azure Key Vault Pricing website (http://go.microsoft.com/fwlink/?linkid=512521).
+
+This parameter is required when you create a new key.
+If you import a key by using the *KeyFilePath* parameter, this parameter is optional:
+
+- If you do not specify this parameter, and this cmdlet imports a key that has .byok file name extension, it imports that key as an HSM-protected key.
+The cmdlet cannot import that key as software-protected key.
+
+- If you do not specify this parameter, and this cmdlet imports a key that has a .pfx file name extension, it imports the key as a software-protected key.
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases: Tags
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -VaultName
 Specifies the name of the key vault to which this cmdlet adds the key.
 This cmdlet constructs the FQDN of a key vault based on the name that this parameter specifies and your current environment.
@@ -340,32 +366,6 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Tag
-Specifies a hash table that contains certificate tags.
-
-To use HSM as your destination, you must have a key vault that supports HSMs.
-For more information about the service tiers and capabilities for Azure Key Vault, see the Azure Key Vault Pricing website (http://go.microsoft.com/fwlink/?linkid=512521).
-
-This parameter is required when you create a new key.
-If you import a key by using the *KeyFilePath* parameter, this parameter is optional:
-
-- If you do not specify this parameter, and this cmdlet imports a key that has .byok file name extension, it imports that key as an HSM-protected key.
-The cmdlet cannot import that key as software-protected key.
-
-- If you do not specify this parameter, and this cmdlet imports a key that has a .pfx file name extension, it imports the key as a software-protected key.
-
-```yaml
-Type: Hashtable
-Parameter Sets: (All)
-Aliases: Tags
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

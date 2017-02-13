@@ -4,7 +4,7 @@ online version: https://msdn.microsoft.com/en-us/library/dn868052.aspx
 schema: 2.0.0
 ---
 
-# Undo-AzureKeyVaultKeyDeletion
+# Undo-AzureKeyVaultKeyRemoval
 
 ## SYNOPSIS
 Recovers a deleted key in a key vault into an active state.
@@ -12,11 +12,11 @@ Recovers a deleted key in a key vault into an active state.
 ## SYNTAX
 
 ```
-Undo-AzureKeyVaultKeyDeletion [-VaultName] <String> [-Name] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
+Undo-AzureKeyVaultKeyRemoval [-VaultName] <String> [-Name] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-The Undo-AzureKeyVaultKeyDeletion cmdlet will recover a previously deleted key.
+The Undo-AzureKeyVaultKeyRemoval cmdlet will recover a previously deleted key.
 The recovered key will be active and can be used for all normal key operations.
 Caller needs to have 'recover' permission in order to perform this operation.
 
@@ -24,7 +24,7 @@ Caller needs to have 'recover' permission in order to perform this operation.
 
 ### Example 1
 ```
-PS C:\>Undo-AzureKeyVaultKeyDeletion -VaultName 'MyKeyVault' -Name 'MyKey'
+PS C:\>Undo-AzureKeyVaultKeyRemoval -VaultName 'MyKeyVault' -Name 'MyKey'
 ```
 
 This command will recover the key 'MyKey' that was previously deleted, into an active and usable state.

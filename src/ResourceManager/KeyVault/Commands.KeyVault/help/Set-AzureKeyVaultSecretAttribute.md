@@ -168,6 +168,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Tag
+Specifies a hash table that contains certificate tags.
+If not specified, the existing tags of the secret remain unchanged.
+Remove a tag by specifying an empty Hashtable.
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases: Tags
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -VaultName
 Specifies the name of the key vault to modify.
 This cmdlet constructs the FQDN of a key vault based on the name that this parameter specifies, and your currently selected environment.
@@ -212,23 +229,6 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Tag
-Specifies a hash table that contains certificate tags.
-If not specified, the existing tags of the secret remain unchanged.
-Remove a tag by specifying an empty Hashtable.
-
-```yaml
-Type: Hashtable
-Parameter Sets: (All)
-Aliases: Tags
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

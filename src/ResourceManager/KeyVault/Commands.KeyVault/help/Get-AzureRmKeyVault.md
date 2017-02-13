@@ -17,9 +17,19 @@ Gets key vaults.
 Get-AzureRmKeyVault [-VaultName] <String> [[-ResourceGroupName] <String>] [<CommonParameters>]
 ```
 
+### ByDeletedVault
+```
+Get-AzureRmKeyVault [-VaultName] <String> -Location <String> [-InRemovedState] [<CommonParameters>]
+```
+
 ### ListVaultsByResourceGroup
 ```
 Get-AzureRmKeyVault [-ResourceGroupName] <String> [<CommonParameters>]
+```
+
+### ListAllDeletedVaultsInSubscription
+```
+Get-AzureRmKeyVault [-InRemovedState] [<CommonParameters>]
 ```
 
 ### ListAllVaultsInSubscription
@@ -58,6 +68,32 @@ PS C:\>Get-AzureRMKeyVault -ResourceGroupName 'ContosoPayRollResourceGroup'
 This command gets all the key vaults in the resource group named ContosoPayRollResourceGroup.
 
 ## PARAMETERS
+
+### -InRemovedState
+Specifies whether to show the previously deleted vaults in the output.```yaml
+Type: SwitchParameter
+Parameter Sets: ByDeletedVault, ListAllDeletedVaultsInSubscription
+Aliases: 
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Location
+The location of the deleted vault.```yaml
+Type: String
+Parameter Sets: ByDeletedVault
+Aliases: 
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
 
 ### -ResourceGroupName
 Specifies the name of the resource group associated with the key vault or key vaults being queried.
@@ -106,7 +142,7 @@ Specifies the name of the key vault.
 
 ```yaml
 Type: String
-Parameter Sets: GetVaultByName
+Parameter Sets: GetVaultByName, ByDeletedVault
 Aliases: 
 
 Required: True

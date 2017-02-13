@@ -1,5 +1,5 @@
 ---
-external help file: Microsoft.Azure.Commands.KeyVault.dll-Help.xm
+external help file: Microsoft.Azure.Commands.KeyVault.dll-Help.xml
 ms.assetid: 817BF177-519F-47BA-86CF-4591FB402E2Dl
 online version: http://go.microsoft.com/fwlink/?LinkId=690299
 schema: 2.0.0
@@ -19,7 +19,7 @@ Remove-AzureKeyVaultKey [-VaultName] <String> [-Name] <String> [-Force] [-PassTh
 
 ## DESCRIPTION
 The Remove-AzureKeyVaultKey cmdlet deletes a key in a key vault.
-If the key was accidentally deleted the key can be recovered using Undo-AzureKeyVaultKeyDeletion by a user with special 'recover' permissions.
+If the key was accidentally deleted the key can be recovered using Undo-AzureKeyVaultKeyRemoval by a user with special 'recover' permissions.
 This cmdlet has a value of high for the **ConfirmImpact** property.
 
 ## EXAMPLES

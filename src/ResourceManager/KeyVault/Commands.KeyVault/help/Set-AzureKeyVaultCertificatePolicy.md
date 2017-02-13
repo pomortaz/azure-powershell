@@ -60,6 +60,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -CertificateType
+Specifies the type of certificate to the issuer.
+
+```yaml
+Type: String
+Parameter Sets: Expanded
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Disabled
 Indicates that the certificate policy is disabled.
 
@@ -336,21 +351,6 @@ Aliases:
 
 Required: True
 Position: 1
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -CertificateType
-Specifies the type of certificate to the issuer.
-
-```yaml
-Type: String
-Parameter Sets: Expanded
-Aliases: 
-
-Required: False
-Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

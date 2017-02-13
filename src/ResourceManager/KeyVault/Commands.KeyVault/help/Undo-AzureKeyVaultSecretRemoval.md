@@ -4,7 +4,7 @@ online version: https://msdn.microsoft.com/en-us/library/dn868052.aspx
 schema: 2.0.0
 ---
 
-# Undo-AzureKeyVaultSecretDeletion
+# Undo-AzureKeyVaultSecretRemoval
 
 ## SYNOPSIS
 Recovers a deleted secret in a key vault into an active state.
@@ -12,12 +12,12 @@ Recovers a deleted secret in a key vault into an active state.
 ## SYNTAX
 
 ```
-Undo-AzureKeyVaultSecretDeletion [-VaultName] <String> [-Name] <String> [-WhatIf] [-Confirm]
+Undo-AzureKeyVaultSecretRemoval [-VaultName] <String> [-Name] <String> [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-The Undo-AzureKeyVaultSecretDeletion cmdlet will recover a previously deleted secret.
+The Undo-AzureKeyVaultSecretRemoval cmdlet will recover a previously deleted secret.
 The recovered secret will be active and can be used for all normal secret operations.
 Caller needs to have 'recover' permission in order to perform this operation.
 
@@ -25,7 +25,7 @@ Caller needs to have 'recover' permission in order to perform this operation.
 
 ### Example 1
 ```
-PS C:\> Undo-AzureKeyVaultSecretDeletion -VaultName 'MyKeyVault' -Name 'MySecret'
+PS C:\> Undo-AzureKeyVaultSecretRemoval -VaultName 'MyKeyVault' -Name 'MySecret'
 ```
 
 This command will recover the secret 'MySecret' that was previously deleted, into an active and usable state.

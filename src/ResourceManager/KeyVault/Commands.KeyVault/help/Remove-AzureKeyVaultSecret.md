@@ -1,6 +1,5 @@
 ---
 external help file: Microsoft.Azure.Commands.KeyVault.dll-Help.xml
-
 online version: http://go.microsoft.com/fwlink/?LinkId=690300
 schema: 2.0.0
 ---
@@ -19,7 +18,7 @@ Remove-AzureKeyVaultSecret [-VaultName] <String> [-Name] <String> [-Force] [-Pas
 
 ## DESCRIPTION
 The Remove-AzureKeyVaultSecret cmdlet deletes a secret in a key vault.
-If the secret was accidentally deleted the secret can be recovered using Undo-AzureKeyVaultSecretDeletion by a user with special 'recover' permissions.
+If the secret was accidentally deleted the secret can be recovered using Undo-AzureKeyVaultSecretRemoval by a user with special 'recover' permissions.
 This cmdlet has a value of high for the **ConfirmImpact** property.
 
 ## EXAMPLES
