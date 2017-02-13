@@ -34,6 +34,19 @@ function Test_CreateNewStandardVaultEnableSoftDelete
     Test-CreateNewStandardVaultEnableSoftDelete $global:resourceGroupName $global:location
 }
 
+#-------------------------------------------------------------------------------------
+
+#------------------------------Soft-delete--------------------------------------
+
+function Test_RecoverDeletedVault
+{
+    Test-RecoverDeletedVault $global:resourceGroupName $global:location
+}
+
+function Test_GetNoneexistingDeletedVault
+{
+    Test-GetNoneexistingDeletedVault
+}
 
 #-------------------------------------------------------------------------------------
 

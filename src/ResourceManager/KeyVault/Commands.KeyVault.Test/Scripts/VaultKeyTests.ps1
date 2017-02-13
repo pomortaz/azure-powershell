@@ -32,6 +32,7 @@ function Assert-KeyAttributes($keyAttr, $keytype, $keyenable, $keyexp, $keynbf, 
          Assert-True { Equal-OperationList  $keyops $keyAttr.KeyOps} "Expect $keyops. Get $keyAttr.KeyOps"
     } 
     Assert-True { Equal-Hashtable $tags $keyAttr.Tags} "Expected $tags. Get $keyAttr.Tags"
+	Assert-NotNull $keyAttr.PurgeDisabled, "Purge Disabled is null."
 }
 
 function BulkCreateSoftKeys ($vault, $prefix, $total)
@@ -714,7 +715,8 @@ function Test_GetNonExistKey
 {
     $keyVault = Get-KeyVault
     $keyname = 'notexist'
-    Assert-Throws {Get-AzureKeyVaultKey -VaultName $keyVault -KeyName $keyname}
+    $key = Get-AzureKeyVaultKey -VaultName $keyVault -KeyName $keyname
+    Assert-Null $key
 }
 
 <#
@@ -743,7 +745,8 @@ function Test_RemoveKeyWithoutPrompt
     $key=Remove-AzureKeyVaultKey -VaultName $keyVault -Name $keyname -Force -Confirm:$false -PassThru
     Assert-NotNull $key
     
-    Assert-Throws { Get-AzureKeyVaultKey  -VaultName $keyVault -Name $keyname}    
+    $key = Get-AzureKeyVaultKey -VaultName $keyVault -KeyName $keyname
+    Assert-Null $key
 }
 
 <#
@@ -778,7 +781,8 @@ function Test_RemoveKeyPositionalParameter
 
     Remove-AzureKeyVaultKey $keyVault $keyname -Force -Confirm:$false      
     
-    Assert-Throws { Get-AzureKeyVaultKey  -VaultName $keyVault -Name $keyname}                    
+    $key = Get-AzureKeyVaultKey -VaultName $keyVault -KeyName $keyname
+    Assert-Null $key                 
 }
 
 <#
@@ -794,8 +798,9 @@ function Test_RemoveKeyAliasParameter
     $global:createdKeys += $keyname    
 
     Remove-AzureKeyVaultKey -VaultName $keyVault -KeyName $keyname  -Force -Confirm:$false                
-
-    Assert-Throws { Get-AzureKeyVaultKey  -VaultName $keyVault -Name $keyname} 
+	
+    $key = Get-AzureKeyVaultKey -VaultName $keyVault -KeyName $keyname
+    Assert-Null $key
 }
 
 <#

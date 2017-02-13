@@ -20,6 +20,8 @@ using PSKeyVaultModels = Microsoft.Azure.Commands.KeyVault.Models;
 namespace Microsoft.Azure.Commands.KeyVault
 {
     [Cmdlet(VerbsCommon.Undo, "AzureRmKeyVaultRemoval",
+        SupportsShouldProcess = true,
+        ConfirmImpact = ConfirmImpact.Low,
         HelpUri = Constants.KeyVaultHelpUri)]
     [OutputType(typeof(PSKeyVaultModels.PSVault))]
     public class UndoAzureKeyVaultRemoval : KeyVaultManagementCmdletBase
@@ -42,7 +44,7 @@ namespace Microsoft.Azure.Commands.KeyVault
         [Parameter(Mandatory = true,
             Position = 1,
             ValueFromPipelineByPropertyName = true,
-            HelpMessage = "Specifies the name of an existing resource group in which to create the key vault.")]
+            HelpMessage = "Specifies the name of the deleted vault resource group.")]
         [ValidateNotNullOrEmpty()]
         public string ResourceGroupName { get; set; }
 

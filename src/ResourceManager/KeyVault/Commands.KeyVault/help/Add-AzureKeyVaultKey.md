@@ -151,7 +151,7 @@ The cmdlet cannot import that key as software-protected key.
 Type: String
 Parameter Sets: Create
 Aliases: 
-Accepted values: HSM, Software, HSM, Software
+Accepted values: HSM, Software
 
 Required: True
 Position: Named
@@ -164,7 +164,7 @@ Accept wildcard characters: False
 Type: String
 Parameter Sets: Import
 Aliases: 
-Accepted values: HSM, Software, HSM, Software
+Accepted values: HSM, Software
 
 Required: False
 Position: Named

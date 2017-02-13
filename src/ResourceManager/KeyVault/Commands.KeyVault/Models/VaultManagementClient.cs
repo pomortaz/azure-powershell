@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using PSKeyVaultProperties = Microsoft.Azure.Commands.KeyVault.Properties;
 using Microsoft.Azure.Management.KeyVault.Models;
 using Microsoft.Rest.Azure;
 
@@ -200,8 +201,8 @@ namespace Microsoft.Azure.Commands.KeyVault.Models
             }
             catch (CloudException ce)
             {
-                if (ce.Response.StatusCode == HttpStatusCode.NoContent)
-                    return;
+                if (ce.Response.StatusCode == HttpStatusCode.NoContent || ce.Response.StatusCode == HttpStatusCode.NotFound)
+                    throw new ArgumentException(string.Format(PSKeyVaultProperties.Resources.VaultNotFound, vaultName, resourceGroupName));
                 throw;
             }
         }
@@ -249,7 +250,7 @@ namespace Microsoft.Azure.Commands.KeyVault.Models
                 deletedVaults.Add(new PSDeletedVault(deletedVault));
             }
 
-            while (response.NextPageLink != null)
+            while (response?.NextPageLink != null)
             {
                 response = this.KeyVaultManagementClient.Vaults.ListDeletedNext(response.NextPageLink);
 

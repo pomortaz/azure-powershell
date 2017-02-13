@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Commands.KeyVault.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The &apos;all&apos; permission is being deprecated, and will be manually expanded to include all the permissions exluding &apos;purge&apos;..
+        ///   Looks up a localized string similar to The &apos;all&apos; permission is being deprecated and does not include the &apos;purge&apos; permission. &apos;Purge&apos; permission must be explicitly set..
         /// </summary>
         internal static string AllPermissionExpansionWarning {
             get {

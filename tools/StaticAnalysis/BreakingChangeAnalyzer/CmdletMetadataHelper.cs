@@ -220,7 +220,11 @@ namespace StaticAnalysis.BreakingChangeAnalyzer
             // Add each output in the new metadata to the dictionary
             foreach (var newOutput in newCmdlet.OutputTypes)
             {
-                outputDictionary.Add(newOutput.Type.Name, newOutput.Type);
+                try
+                {
+                    outputDictionary.Add(newOutput.Type.Name, newOutput.Type);
+                }
+                catch (Exception ex) { } 
             }
 
             // For each output in the old metadata, see if it

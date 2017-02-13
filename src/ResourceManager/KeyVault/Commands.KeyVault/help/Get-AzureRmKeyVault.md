@@ -62,10 +62,24 @@ You can inspect the properties of $MyVault to get details about the key vault.
 
 ### Example 3: Get key vaults in a resource group
 ```
-PS C:\>Get-AzureRMKeyVault -ResourceGroupName 'ContosoPayRollResourceGroup'
+PS C:\>Get-AzureRmKeyVault -ResourceGroupName 'ContosoPayRollResourceGroup'
 ```
 
 This command gets all the key vaults in the resource group named ContosoPayRollResourceGroup.
+
+### Example 4: Get all deleted key vaults in your current subscription
+```
+PS C:\>Get-AzureRmKeyVault -InRemovedState
+```
+
+This command gets all the deleted key vaults in your current subscription.
+
+### Example 5: Get a deleted key vault
+```
+PS C:\>Get-AzureRMKeyVault -VaultName 'Contoso03Vault'  -Location 'eastus2' -InRemovedState
+```
+
+This command gets the deleted key vault information named Contoso03Vault in your current subscription and in eastus2 region.
 
 ## PARAMETERS
 

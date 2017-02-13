@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Commands.KeyVault
         public string ResourceGroupName { get; set; }
 
         [Parameter(Mandatory = true,
-            Position = 1,
+            Position = 2,
             ParameterSetName = GetDeletedVaultParameterSet,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "The location of the deleted vault.")]

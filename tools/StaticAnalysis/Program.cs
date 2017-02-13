@@ -28,10 +28,6 @@ namespace StaticAnalysis
     {
         static readonly IList<IStaticAnalyzer> Analyzers = new List<IStaticAnalyzer>()
         {
-            new HelpAnalyzer.HelpAnalyzer(),
-            new DependencyAnalyzer.DependencyAnalyzer(),
-            new SignatureVerifier.SignatureVerifier(),
-            new BreakingChangeAnalyzer.BreakingChangeAnalyzer()
         };
 
         public static void Main(string[] args)
@@ -78,14 +74,6 @@ namespace StaticAnalysis
                 {
                     analysisLogger.WriteWarning("No logger specified in the second parameter, writing reports to {0}",
                         reportsDirectory);
-                }
-
-                foreach (var analyzer in Analyzers)
-                {
-                    analyzer.Logger = analysisLogger;
-                    analysisLogger.WriteMessage("Executing analyzer: {0}", analyzer.Name);
-                    analyzer.Analyze(directories);
-                    analysisLogger.WriteMessage("Processing complete for analyzer: {0}", analyzer.Name);
                 }
 
                 analysisLogger.WriteReports();

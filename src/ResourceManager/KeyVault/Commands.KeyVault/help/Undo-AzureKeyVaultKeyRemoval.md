@@ -16,7 +16,7 @@ Undo-AzureKeyVaultKeyRemoval [-VaultName] <String> [-Name] <String> [-WhatIf] [-
 ```
 
 ## DESCRIPTION
-The Undo-AzureKeyVaultKeyRemoval cmdlet will recover a previously deleted key.
+The **Undo-AzureKeyVaultKeyRemoval** cmdlet will recover a previously deleted key.
 The recovered key will be active and can be used for all normal key operations.
 Caller needs to have 'recover' permission in order to perform this operation.
 
@@ -109,11 +109,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[https://msdn.microsoft.com/en-us/library/dn868052.aspx](https://msdn.microsoft.com/en-us/library/dn868052.aspx)
+[Remove-AzureKeyVaultKey](./Remove-AzureKeyVaultKey.md)
 
-[Remove-AzureKeyVaultKey]()
+[Add-AzureKeyVaultKey](./Add-AzureKeyVaultKey.md)
 
-[Add-AzureKeyVaultKey]()
-
-[Get-AzureKeyVaultKey]()
+[Get-AzureKeyVaultKey](./Get-AzureKeyVaultKey.md)
 

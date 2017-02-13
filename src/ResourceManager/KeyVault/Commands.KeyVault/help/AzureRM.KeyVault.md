@@ -120,5 +120,5 @@ Recovers a deleted key in a key vault into an active state.
 Recovers a deleted secret in a key vault into an active state.
 
 ### [Undo-AzureRmKeyVaultRemoval](Undo-AzureRmKeyVaultRemoval.md)
-{{Fill in the Synopsis}}
+Recovers a deleted key vault into an active state.
 

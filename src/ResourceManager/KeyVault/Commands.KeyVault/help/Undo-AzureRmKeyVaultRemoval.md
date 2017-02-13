@@ -7,26 +7,27 @@ schema: 2.0.0
 # Undo-AzureRmKeyVaultRemoval
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Recovers a deleted key vault into an active state.
 
 ## SYNTAX
 
 ```
 Undo-AzureRmKeyVaultRemoval [-VaultName] <String> [-ResourceGroupName] <String> [-Location] <String>
- [-Tag <Hashtable>] [<CommonParameters>]
+ [-Tag <Hashtable>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+The **Undo-AzureRmKeyVaultRemoval** cmdlet will recover a previously deleted key vault.
+The recovered vault will be active after recovery
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> Undo-AzureRmKeyVaultRemoval -VaultName 'MyKeyVault' -ResourceGroupName 'MyResourceGroup' -Location 'eastus2' -Tag @{"x"= "y"}
 ```
 
-{{ Add example description here }}
+This command will recover the key vault 'MyKeyVault' that was previously deleted from eastus2 region and 'MyResourceGroup' resource group, into an active and usable state. It also replaces the tags with new tag.
 
 ## PARAMETERS
 
@@ -91,6 +92,36 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
@@ -107,5 +138,8 @@ System.Collections.Hashtable
 
 ## RELATED LINKS
 
-[https://msdn.microsoft.com/en-us/library/dn868052.aspx](https://msdn.microsoft.com/en-us/library/dn868052.aspx)
+[Remove-AzureRmKeyVault](./Remove-AzureRmKeyVault.md)
 
+[New-AzureRmKeyVault](./New-AzureRmKeyVault.md)
+
+[Get-AzureRmKeyVault](./Get-AzureRmKeyVault.md)

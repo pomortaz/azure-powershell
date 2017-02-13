@@ -17,7 +17,7 @@ Undo-AzureKeyVaultSecretRemoval [-VaultName] <String> [-Name] <String> [-WhatIf]
 ```
 
 ## DESCRIPTION
-The Undo-AzureKeyVaultSecretRemoval cmdlet will recover a previously deleted secret.
+The **Undo-AzureKeyVaultSecretRemoval** cmdlet will recover a previously deleted secret.
 The recovered secret will be active and can be used for all normal secret operations.
 Caller needs to have 'recover' permission in order to perform this operation.
 
@@ -110,10 +110,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[https://msdn.microsoft.com/en-us/library/dn868052.aspx](https://msdn.microsoft.com/en-us/library/dn868052.aspx)
+[Remove-AzureKeyVaultSecret](./Remove-AzureKeyVaultSecret.md)
 
-[Remove-AzureKeyVaultSecret]()
+[Add-AzureKeyVaultSecret](./Add-AzureKeyVaultSecret.md)
 
-[Add-AzureKeyVaultSecret]()
-
-[Get-AzureKeyVaultSecret]()
+[Get-AzureKeyVaultSecret](./Get-AzureKeyVaultSecret.md)

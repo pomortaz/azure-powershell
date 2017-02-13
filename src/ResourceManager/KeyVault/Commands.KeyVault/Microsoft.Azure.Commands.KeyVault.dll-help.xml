@@ -396,11 +396,6 @@ Updated     : 2/8/2016 11:21:45 PM</dev:code>
 <command:parameterValueGroup><command:parameterValue required="false" variableLength="false">HSM</command:parameterValue>
 <command:parameterValue required="false" variableLength="false">Software</command:parameterValue>
 <command:parameterValue required="false" variableLength="false">HSM</command:parameterValue>
-<command:parameterValue required="false" variableLength="false">Software</command:parameterValue>
-<command:parameterValue required="false" variableLength="false">HSM</command:parameterValue>
-<command:parameterValue required="false" variableLength="false">Software</command:parameterValue>
-<command:parameterValue required="false" variableLength="false">HSM</command:parameterValue>
-<command:parameterValue required="false" variableLength="false">Software</command:parameterValue>
 </command:parameterValueGroup>
 <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 <dev:type><maml:name>String</maml:name>
@@ -528,11 +523,6 @@ Updated     : 2/8/2016 11:21:45 PM</dev:code>
 <command:parameterValueGroup><command:parameterValue required="false" variableLength="false">HSM</command:parameterValue>
 <command:parameterValue required="false" variableLength="false">Software</command:parameterValue>
 <command:parameterValue required="false" variableLength="false">HSM</command:parameterValue>
-<command:parameterValue required="false" variableLength="false">Software</command:parameterValue>
-<command:parameterValue required="false" variableLength="false">HSM</command:parameterValue>
-<command:parameterValue required="false" variableLength="false">Software</command:parameterValue>
-<command:parameterValue required="false" variableLength="false">HSM</command:parameterValue>
-<command:parameterValue required="false" variableLength="false">Software</command:parameterValue>
 </command:parameterValueGroup>
 <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 <dev:type><maml:name>String</maml:name>
@@ -1350,9 +1340,6 @@ OrganizationDetails : Microsoft.Azure.Commands.KeyVault.Models.KeyVaultCertifica
 </command:example>
 </command:examples>
 <command:relatedLinks><maml:navigationLink><maml:linkText>Remove-AzureKeyVaultCertificateIssuer</maml:linkText>
-<maml:uri></maml:uri>
-</maml:navigationLink>
-<maml:navigationLink><maml:linkText>Set-AzureKeyVaultCertificateIssuer</maml:linkText>
 <maml:uri></maml:uri>
 </maml:navigationLink>
 <maml:navigationLink><maml:linkText>Set-AzureKeyVaultCertificateIssuer</maml:linkText>
@@ -2177,8 +2164,24 @@ PS C:\&gt; Write-Host "Secret Value is: " $secret.SecretValueText</dev:code>
 </dev:remarks>
 </command:example>
 <command:example><maml:title>Example 3: Get key vaults in a resource group</maml:title>
-<dev:code>PS C:\&gt;Get-AzureRMKeyVault -ResourceGroupName 'ContosoPayRollResourceGroup'</dev:code>
+<dev:code>PS C:\&gt;Get-AzureRmKeyVault -ResourceGroupName 'ContosoPayRollResourceGroup'</dev:code>
 <dev:remarks><maml:para>This command gets all the key vaults in the resource group named ContosoPayRollResourceGroup.
+</maml:para>
+<maml:para></maml:para>
+<maml:para></maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 4: Get all deleted key vaults in your current subscription</maml:title>
+<dev:code>PS C:\&gt;Get-AzureRmKeyVault -InRemovedState</dev:code>
+<dev:remarks><maml:para>This command gets all the deleted key vaults in your current subscription.
+</maml:para>
+<maml:para></maml:para>
+<maml:para></maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 5: Get a deleted key vault</maml:title>
+<dev:code>PS C:\&gt;Get-AzureRMKeyVault -VaultName 'Contoso03Vault'  -Location 'eastus2' -InRemovedState</dev:code>
+<dev:remarks><maml:para>This command gets the deleted key vault information named Contoso03Vault in your current subscription and in eastus2 region.
 </maml:para>
 <maml:para></maml:para>
 <maml:para></maml:para>
@@ -3893,9 +3896,6 @@ Updated     : 2/8/2016 11:29:33 PM</dev:code>
 </command:example>
 </command:examples>
 <command:relatedLinks><maml:navigationLink><maml:linkText>Get-AzureKeyVaultCertificateIssuer</maml:linkText>
-<maml:uri></maml:uri>
-</maml:navigationLink>
-<maml:navigationLink><maml:linkText>Set-AzureKeyVaultCertificateIssuer</maml:linkText>
 <maml:uri></maml:uri>
 </maml:navigationLink>
 <maml:navigationLink><maml:linkText>Set-AzureKeyVaultCertificateIssuer</maml:linkText>
@@ -7037,7 +7037,31 @@ PS C:\&gt; Get-AzureKeyVaultKey -VaultName $VaultName -Name $Name -IncludeVersio
 <dev:defaultValue>False</dev:defaultValue>
 </command:parameter>
 <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none"><maml:name>PermissionsToCertificates</maml:name>
-<maml:Description><maml:para>Specifies an array of certificate permissions to grant to a user or service principal.
+<maml:Description><maml:para>Specifies an array of certificate permissions to grant to a user or service principal. The acceptable values for this parameter are:
+</maml:para>
+<maml:para>- Get
+</maml:para>
+<maml:para>- List
+</maml:para>
+<maml:para>- Delete
+</maml:para>
+<maml:para>- Create
+</maml:para>
+<maml:para>- Import
+</maml:para>
+<maml:para>- Update
+</maml:para>
+<maml:para>- Managecontacts
+</maml:para>
+<maml:para>- Getissuers
+</maml:para>
+<maml:para>- Listissuers
+</maml:para>
+<maml:para>- Setissuers
+</maml:para>
+<maml:para>- Deleteissuers
+</maml:para>
+<maml:para>- Manageissuers
 </maml:para>
 </maml:Description>
 <command:parameterValueGroup><command:parameterValue required="false" variableLength="false">get</command:parameterValue>
@@ -7089,7 +7113,9 @@ PS C:\&gt; Get-AzureKeyVaultKey -VaultName $VaultName -Name $Name -IncludeVersio
 </maml:para>
 <maml:para>- Restore
 </maml:para>
-<maml:para>- All
+<maml:para>- Recover
+</maml:para>
+<maml:para>- Purge
 </maml:para>
 </maml:Description>
 <command:parameterValueGroup><command:parameterValue required="false" variableLength="false">decrypt</command:parameterValue>
@@ -7124,7 +7150,13 @@ PS C:\&gt; Get-AzureKeyVaultKey -VaultName $VaultName -Name $Name -IncludeVersio
 </maml:para>
 <maml:para>- Delete
 </maml:para>
-<maml:para>- All
+<maml:para>- Backup
+</maml:para>
+<maml:para>- Restore
+</maml:para>
+<maml:para>- Recover
+</maml:para>
+<maml:para>- Purge
 </maml:para>
 </maml:Description>
 <command:parameterValueGroup><command:parameterValue required="false" variableLength="false">get</command:parameterValue>
@@ -7251,7 +7283,31 @@ PS C:\&gt; Get-AzureKeyVaultKey -VaultName $VaultName -Name $Name -IncludeVersio
 <dev:defaultValue>False</dev:defaultValue>
 </command:parameter>
 <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none"><maml:name>PermissionsToCertificates</maml:name>
-<maml:Description><maml:para>Specifies an array of certificate permissions to grant to a user or service principal.
+<maml:Description><maml:para>Specifies an array of certificate permissions to grant to a user or service principal. The acceptable values for this parameter are:
+</maml:para>
+<maml:para>- Get
+</maml:para>
+<maml:para>- List
+</maml:para>
+<maml:para>- Delete
+</maml:para>
+<maml:para>- Create
+</maml:para>
+<maml:para>- Import
+</maml:para>
+<maml:para>- Update
+</maml:para>
+<maml:para>- Managecontacts
+</maml:para>
+<maml:para>- Getissuers
+</maml:para>
+<maml:para>- Listissuers
+</maml:para>
+<maml:para>- Setissuers
+</maml:para>
+<maml:para>- Deleteissuers
+</maml:para>
+<maml:para>- Manageissuers
 </maml:para>
 </maml:Description>
 <command:parameterValueGroup><command:parameterValue required="false" variableLength="false">get</command:parameterValue>
@@ -7303,7 +7359,9 @@ PS C:\&gt; Get-AzureKeyVaultKey -VaultName $VaultName -Name $Name -IncludeVersio
 </maml:para>
 <maml:para>- Restore
 </maml:para>
-<maml:para>- All
+<maml:para>- Recover
+</maml:para>
+<maml:para>- Purge
 </maml:para>
 </maml:Description>
 <command:parameterValueGroup><command:parameterValue required="false" variableLength="false">decrypt</command:parameterValue>
@@ -7338,7 +7396,13 @@ PS C:\&gt; Get-AzureKeyVaultKey -VaultName $VaultName -Name $Name -IncludeVersio
 </maml:para>
 <maml:para>- Delete
 </maml:para>
-<maml:para>- All
+<maml:para>- Backup
+</maml:para>
+<maml:para>- Restore
+</maml:para>
+<maml:para>- Recover
+</maml:para>
+<maml:para>- Purge
 </maml:para>
 </maml:Description>
 <command:parameterValueGroup><command:parameterValue required="false" variableLength="false">get</command:parameterValue>
@@ -7406,7 +7470,31 @@ PS C:\&gt; Get-AzureKeyVaultKey -VaultName $VaultName -Name $Name -IncludeVersio
 <dev:defaultValue>False</dev:defaultValue>
 </command:parameter>
 <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none"><maml:name>PermissionsToCertificates</maml:name>
-<maml:Description><maml:para>Specifies an array of certificate permissions to grant to a user or service principal.
+<maml:Description><maml:para>Specifies an array of certificate permissions to grant to a user or service principal. The acceptable values for this parameter are:
+</maml:para>
+<maml:para>- Get
+</maml:para>
+<maml:para>- List
+</maml:para>
+<maml:para>- Delete
+</maml:para>
+<maml:para>- Create
+</maml:para>
+<maml:para>- Import
+</maml:para>
+<maml:para>- Update
+</maml:para>
+<maml:para>- Managecontacts
+</maml:para>
+<maml:para>- Getissuers
+</maml:para>
+<maml:para>- Listissuers
+</maml:para>
+<maml:para>- Setissuers
+</maml:para>
+<maml:para>- Deleteissuers
+</maml:para>
+<maml:para>- Manageissuers
 </maml:para>
 </maml:Description>
 <command:parameterValueGroup><command:parameterValue required="false" variableLength="false">get</command:parameterValue>
@@ -7458,7 +7546,9 @@ PS C:\&gt; Get-AzureKeyVaultKey -VaultName $VaultName -Name $Name -IncludeVersio
 </maml:para>
 <maml:para>- Restore
 </maml:para>
-<maml:para>- All
+<maml:para>- Recover
+</maml:para>
+<maml:para>- Purge
 </maml:para>
 </maml:Description>
 <command:parameterValueGroup><command:parameterValue required="false" variableLength="false">decrypt</command:parameterValue>
@@ -7493,7 +7583,13 @@ PS C:\&gt; Get-AzureKeyVaultKey -VaultName $VaultName -Name $Name -IncludeVersio
 </maml:para>
 <maml:para>- Delete
 </maml:para>
-<maml:para>- All
+<maml:para>- Backup
+</maml:para>
+<maml:para>- Restore
+</maml:para>
+<maml:para>- Recover
+</maml:para>
+<maml:para>- Purge
 </maml:para>
 </maml:Description>
 <command:parameterValueGroup><command:parameterValue required="false" variableLength="false">get</command:parameterValue>
@@ -7598,7 +7694,31 @@ PS C:\&gt; Get-AzureKeyVaultKey -VaultName $VaultName -Name $Name -IncludeVersio
 <dev:defaultValue>False</dev:defaultValue>
 </command:parameter>
 <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none"><maml:name>PermissionsToCertificates</maml:name>
-<maml:Description><maml:para>Specifies an array of certificate permissions to grant to a user or service principal.
+<maml:Description><maml:para>Specifies an array of certificate permissions to grant to a user or service principal. The acceptable values for this parameter are:
+</maml:para>
+<maml:para>- Get
+</maml:para>
+<maml:para>- List
+</maml:para>
+<maml:para>- Delete
+</maml:para>
+<maml:para>- Create
+</maml:para>
+<maml:para>- Import
+</maml:para>
+<maml:para>- Update
+</maml:para>
+<maml:para>- Managecontacts
+</maml:para>
+<maml:para>- Getissuers
+</maml:para>
+<maml:para>- Listissuers
+</maml:para>
+<maml:para>- Setissuers
+</maml:para>
+<maml:para>- Deleteissuers
+</maml:para>
+<maml:para>- Manageissuers
 </maml:para>
 </maml:Description>
 <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
@@ -7637,7 +7757,9 @@ PS C:\&gt; Get-AzureKeyVaultKey -VaultName $VaultName -Name $Name -IncludeVersio
 </maml:para>
 <maml:para>- Restore
 </maml:para>
-<maml:para>- All
+<maml:para>- Recover
+</maml:para>
+<maml:para>- Purge
 </maml:para>
 </maml:Description>
 <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
@@ -7656,7 +7778,13 @@ PS C:\&gt; Get-AzureKeyVaultKey -VaultName $VaultName -Name $Name -IncludeVersio
 </maml:para>
 <maml:para>- Delete
 </maml:para>
-<maml:para>- All
+<maml:para>- Backup
+</maml:para>
+<maml:para>- Restore
+</maml:para>
+<maml:para>- Recover
+</maml:para>
+<maml:para>- Purge
 </maml:para>
 </maml:Description>
 <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
@@ -7738,8 +7866,8 @@ PS C:\&gt; Get-AzureKeyVaultKey -VaultName $VaultName -Name $Name -IncludeVersio
 </maml:alert>
 </maml:alertSet>
 <command:examples><command:example><maml:title>Example 1: Grant permissions to a user for a key vault Key Vault and modify the permissionskey vault</maml:title>
-<dev:code>PS C:\&gt;Set-AzureRmKeyVaultAccessPolicy -VaultName 'Contoso03Vault' -UserPrincipalName 'PattiFuller@contoso.com' -PermissionsToKeys create,import,delete,list -PermissionsToSecrets 'Set,Delete'
-PS C:\&gt; Set-AzureRmKeyVaultAccessPolicy -VaultName 'Contoso03Vault' -UserPrincipalName 'PattiFuller@contoso.com' -PermissionsToSecrets 'Set,Delete,Get' -PassThru
+<dev:code>PS C:\&gt;Set-AzureRmKeyVaultAccessPolicy -VaultName 'Contoso03Vault' -UserPrincipalName 'PattiFuller@contoso.com' -PermissionsToKeys create,import,delete,list -PermissionsToSecrets 'set,delete'
+PS C:\&gt; Set-AzureRmKeyVaultAccessPolicy -VaultName 'Contoso03Vault' -UserPrincipalName 'PattiFuller@contoso.com' -PermissionsToSecrets 'set,delete,get' -PassThru
 PS C:\&gt; Set-AzureRmKeyVaultAccessPolicy -VaultName 'Contoso03Vault' -UserPrincipalName 'PattiFuller@contoso.com' -PermissionsToKeys @() -PassThru</dev:code>
 <dev:remarks><maml:para>The first command grants permissions for a user in your Azure Active Directory, PattiFuller@contoso.com, to perform operations on keys and secrets with a key vault named Contoso03Vault.
 </maml:para>
@@ -8072,7 +8200,7 @@ ErrorMessage              :</dev:code>
 </dev:remarks>
 </command:example>
 </command:examples>
-<command:relatedLinks><maml:navigationLink><maml:linkText>https://msdn.microsoft.com/en-us/library/dn868052.aspx</maml:linkText>
+<command:relatedLinks><maml:navigationLink><maml:linkText>Online Version:</maml:linkText>
 <maml:uri>https://msdn.microsoft.com/en-us/library/dn868052.aspx</maml:uri>
 </maml:navigationLink>
 <maml:navigationLink><maml:linkText>Remove-AzureKeyVaultKey</maml:linkText>
@@ -8198,7 +8326,7 @@ ErrorMessage              :</dev:code>
 </dev:remarks>
 </command:example>
 </command:examples>
-<command:relatedLinks><maml:navigationLink><maml:linkText>https://msdn.microsoft.com/en-us/library/dn868052.aspx</maml:linkText>
+<command:relatedLinks><maml:navigationLink><maml:linkText>Online Version:</maml:linkText>
 <maml:uri>https://msdn.microsoft.com/en-us/library/dn868052.aspx</maml:uri>
 </maml:navigationLink>
 <maml:navigationLink><maml:linkText>Remove-AzureKeyVaultSecret</maml:linkText>
@@ -8216,11 +8344,11 @@ ErrorMessage              :</dev:code>
 <command:details><command:name>Undo-AzureRmKeyVaultRemoval</command:name>
 <command:verb>Undo</command:verb>
 <command:noun>AzureRmKeyVaultRemoval</command:noun>
-<maml:description><maml:para>{{Fill in the Synopsis}}
+<maml:description><maml:para>Recovers a deleted key vault into an active state.
 </maml:para>
 </maml:description>
 </command:details>
-<maml:description><maml:para>{{Fill in the Description}}
+<maml:description><maml:para>The Undo-AzureRmKeyVaultRemoval cmdlet will recover a previously deleted key vault. The recovered vault will be active after recovery
 </maml:para>
 </maml:description>
 <command:syntax><command:syntaxItem><maml:name>Undo-AzureRmKeyVaultRemoval</maml:name>
@@ -8260,6 +8388,22 @@ ErrorMessage              :</dev:code>
 <maml:uri /></dev:type>
 <dev:defaultValue>None</dev:defaultValue>
 </command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf"><maml:name>Confirm</maml:name>
+<maml:Description><maml:para>Prompts you for confirmation before running the cmdlet.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi"><maml:name>WhatIf</maml:name>
+<maml:Description><maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
 </command:syntaxItem>
 </command:syntax>
 <command:parameters><command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none"><maml:name>Location</maml:name>
@@ -8298,6 +8442,24 @@ ErrorMessage              :</dev:code>
 <maml:uri /></dev:type>
 <dev:defaultValue>None</dev:defaultValue>
 </command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf"><maml:name>Confirm</maml:name>
+<maml:Description><maml:para>Prompts you for confirmation before running the cmdlet.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi"><maml:name>WhatIf</maml:name>
+<maml:Description><maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
 </command:parameters>
 <command:inputTypes><command:inputType><dev:type><maml:name>System.String</maml:name>
 </dev:type>
@@ -8318,16 +8480,25 @@ ErrorMessage              :</dev:code>
 </maml:alert>
 </maml:alertSet>
 <command:examples><command:example><maml:title>Example 1</maml:title>
-<dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
-<dev:remarks><maml:para>{{ Add example description here }}
+<dev:code>PS C:\&gt; Undo-AzureRmKeyVaultRemoval -VaultName 'MyKeyVault' -ResourceGroupName 'MyResourceGroup' -Location 'eastus2' -Tag @{"x"= "y"}</dev:code>
+<dev:remarks><maml:para>This command will recover the key vault 'MyKeyVault' that was previously deleted from eastus2 region and 'MyResourceGroup' resource group, into an active and usable state. It also replaces the tags with new tag.
 </maml:para>
 <maml:para></maml:para>
 <maml:para></maml:para>
 </dev:remarks>
 </command:example>
 </command:examples>
-<command:relatedLinks><maml:navigationLink><maml:linkText>https://msdn.microsoft.com/en-us/library/dn868052.aspx</maml:linkText>
+<command:relatedLinks><maml:navigationLink><maml:linkText>Online Version:</maml:linkText>
 <maml:uri>https://msdn.microsoft.com/en-us/library/dn868052.aspx</maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Remove-AzureRmKeyVault</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>New-AzureRmKeyVault</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Get-AzureRmKeyVault</maml:linkText>
+<maml:uri></maml:uri>
 </maml:navigationLink>
 </command:relatedLinks>
 </command:command>

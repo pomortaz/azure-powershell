@@ -19,6 +19,7 @@ using PSKeyVaultModels = Microsoft.Azure.Commands.KeyVault.Models;
 using PSKeyVaultProperties = Microsoft.Azure.Commands.KeyVault.Properties;
 using SecretPerms = Microsoft.Azure.Management.KeyVault.Models.SecretPermissions;
 using KeyPerms = Microsoft.Azure.Management.KeyVault.Models.KeyPermissions;
+using CertPerms = Microsoft.Azure.Management.KeyVault.Models.CertificatePermissions;
 
 namespace Microsoft.Azure.Commands.KeyVault
 {
@@ -54,6 +55,21 @@ namespace Microsoft.Azure.Commands.KeyVault
             KeyPerms.UnwrapKey,
             KeyPerms.Encrypt,
             KeyPerms.Decrypt
+        };
+
+        private readonly string[] CertificateAllExpansion = {
+            CertPerms.Get,
+            CertPerms.Delete,
+            CertPerms.List,
+            CertPerms.Create,
+            CertPerms.Import,
+            CertPerms.Update,
+            CertPerms.Deleteissuers,
+            CertPerms.Getissuers,
+            CertPerms.Listissuers,
+            CertPerms.Managecontacts,
+            CertPerms.Manageissuers,
+            CertPerms.Setissuers
         };
 
         #region Parameter Set Names
@@ -179,7 +195,7 @@ namespace Microsoft.Azure.Commands.KeyVault
             ParameterSetName = ByUserPrincipalName,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Specifies certificate operation permissions to grant to a user or service principal.")]
-        [ValidateSet("get", "list", "delete", "create", "import", "update", "managecontacts", "getissuers", "listissuers", "setissuers", "deleteissuers", "all")]
+        [ValidateSet("get", "list", "delete", "create", "import", "update", "managecontacts", "getissuers", "listissuers", "setissuers", "deleteissuers", "manageissuers", "all")]
         public string[] PermissionsToCertificates { get; set; }
 
         [Parameter(Mandatory = false,
@@ -261,19 +277,17 @@ namespace Microsoft.Azure.Commands.KeyVault
                         throw new ArgumentException(PSKeyVaultProperties.Resources.PermissionsNotSpecified);
                     else
                     {
-                        //Validate
-                        if (!IsMeaningfulPermissionSet(PermissionsToCertificates))
-                            throw new ArgumentException(string.Format(PSKeyVaultProperties.Resources.PermissionSetIncludesAllPlusOthers, "certificates"));
-
                         // Expand the permissions sets.
                         if (PermissionsToKeys != null && PermissionsToKeys.Contains("all", StringComparer.OrdinalIgnoreCase) 
-                            || PermissionsToSecrets != null && PermissionsToSecrets.Contains("all", StringComparer.OrdinalIgnoreCase))
+                            || PermissionsToSecrets != null && PermissionsToSecrets.Contains("all", StringComparer.OrdinalIgnoreCase)
+                            || PermissionsToCertificates!= null && PermissionsToCertificates.Contains("all", StringComparer.OrdinalIgnoreCase))
                         {
                             WriteWarning(PSKeyVaultProperties.Resources.AllPermissionExpansionWarning);
                         }
 
                         PermissionsToKeys = ExpandPermissionSet(PermissionsToKeys, KeyAllExpansion);
                         PermissionsToSecrets = ExpandPermissionSet(PermissionsToSecrets, SecretAllExpansion);
+                        PermissionsToCertificates = ExpandPermissionSet(PermissionsToCertificates, CertificateAllExpansion);
 
                         //Is there an existing policy for this policy identity?
                         var existingPolicy = vault.AccessPolicies.FirstOrDefault(ap => MatchVaultAccessPolicyIdentity(ap, objId, ApplicationId));
@@ -339,18 +353,6 @@ namespace Microsoft.Azure.Commands.KeyVault
         private bool MatchVaultAccessPolicyIdentity(PSKeyVaultModels.PSVaultAccessPolicy ap, string objectId, Guid? applicationId)
         {
             return ap.ApplicationId == applicationId && string.Equals(ap.ObjectId, objectId, StringComparison.OrdinalIgnoreCase);
-        }
-
-        private bool IsMeaningfulPermissionSet(string[] perms)
-        {
-            if (perms == null || perms.Length == 0)
-                return true;
-
-            var nonEmptyPerms = perms.Where(p => !string.IsNullOrWhiteSpace(p));
-            if (nonEmptyPerms.Contains("all", StringComparer.OrdinalIgnoreCase) && nonEmptyPerms.Count() > 1)
-                return false;
-
-            return true;
         }
     }
 }

@@ -17,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Security;
 using Microsoft.Azure.Commands.Common.Authentication;
 using Microsoft.Azure.Commands.Common.Authentication.Models;
@@ -26,6 +25,7 @@ using KeyVaultProperties = Microsoft.Azure.Commands.KeyVault.Properties;
 using Microsoft.Azure.KeyVault.Models;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Rest.Azure;
+using System.Net;
 
 namespace Microsoft.Azure.Commands.KeyVault.Models
 {
@@ -250,6 +250,13 @@ namespace Microsoft.Azure.Commands.KeyVault.Models
             {
                 contacts = this.keyVaultClient.GetCertificateContactsAsync(vaultAddress).GetAwaiter().GetResult();
             }
+            catch (KeyVaultErrorException ex)
+            {
+                if (ex.Response.StatusCode == HttpStatusCode.NotFound)
+                    return null;
+                else
+                    throw;
+            }
             catch (Exception ex)
             {
                 throw GetInnerException(ex);
@@ -273,6 +280,13 @@ namespace Microsoft.Azure.Commands.KeyVault.Models
             {
                 certBundle = this.keyVaultClient.GetCertificateAsync(vaultAddress, certName, certificateVersion).GetAwaiter().GetResult();
             }
+            catch (KeyVaultErrorException ex)
+            {
+                if (ex.Response.StatusCode == HttpStatusCode.NotFound)
+                    return null;
+                else
+                    throw;
+            }
             catch (Exception ex)
             {
                 throw GetInnerException(ex);
@@ -294,6 +308,13 @@ namespace Microsoft.Azure.Commands.KeyVault.Models
             try
             {
                 keyBundle = this.keyVaultClient.GetKeyAsync(vaultAddress, keyName, keyVersion).GetAwaiter().GetResult();
+            }
+            catch (KeyVaultErrorException ex)
+            {
+                if (ex.Response.StatusCode == HttpStatusCode.NotFound)
+                    return null;
+                else
+                    throw;
             }
             catch (Exception ex)
             {
@@ -537,6 +558,13 @@ namespace Microsoft.Azure.Commands.KeyVault.Models
             {
                 secret = this.keyVaultClient.GetSecretAsync(secretIdentifier.Identifier).GetAwaiter().GetResult();
             }
+            catch (KeyVaultErrorException ex)
+            {
+                if (ex.Response.StatusCode == HttpStatusCode.NotFound)
+                    return null;
+                else
+                    throw;
+            }
             catch (Exception ex)
             {
                 throw GetInnerException(ex);
@@ -686,6 +714,13 @@ namespace Microsoft.Azure.Commands.KeyVault.Models
             {
                 certificateOperation = this.keyVaultClient.GetCertificateOperationAsync(vaultAddress, certificateName).GetAwaiter().GetResult();
             }
+            catch (KeyVaultErrorException ex)
+            {
+                if (ex.Response.StatusCode == HttpStatusCode.NotFound)
+                    return null;
+                else
+                    throw;
+            }
             catch (Exception ex)
             {
                 throw GetInnerException(ex);
@@ -826,6 +861,13 @@ namespace Microsoft.Azure.Commands.KeyVault.Models
             {
                 certificatePolicy = this.keyVaultClient.GetCertificatePolicyAsync(vaultAddress, certificateName).GetAwaiter().GetResult();
             }
+            catch (KeyVaultErrorException ex)
+            {
+                if (ex.Response.StatusCode == HttpStatusCode.NotFound)
+                    return null;
+                else
+                    throw;
+            }
             catch (Exception ex)
             {
                 throw GetInnerException(ex);
@@ -871,6 +913,13 @@ namespace Microsoft.Azure.Commands.KeyVault.Models
             try
             {
                 certificateIssuer = this.keyVaultClient.GetCertificateIssuerAsync(vaultAddress, issuerName).GetAwaiter().GetResult();
+            }
+            catch (KeyVaultErrorException ex)
+            {
+                if (ex.Response.StatusCode == HttpStatusCode.NotFound)
+                    return null;
+                else
+                    throw;
             }
             catch (Exception ex)
             {
@@ -1002,6 +1051,13 @@ namespace Microsoft.Azure.Commands.KeyVault.Models
             {
                 deletedKeyBundle = this.keyVaultClient.GetDeletedKeyAsync(vaultAddress, keyName).GetAwaiter().GetResult();
             }
+            catch (KeyVaultErrorException ex)
+            {
+                if(ex.Response.StatusCode == HttpStatusCode.NotFound)
+                    return null;
+                else
+                    throw;
+            }
             catch (Exception ex)
             {
                 throw GetInnerException(ex);
@@ -1052,6 +1108,13 @@ namespace Microsoft.Azure.Commands.KeyVault.Models
             try
             {
                 deletedSecret = this.keyVaultClient.GetDeletedSecretAsync(vaultAddress, secretName).GetAwaiter().GetResult();
+            }
+            catch (KeyVaultErrorException ex)
+            {
+                if (ex.Response.StatusCode == HttpStatusCode.NotFound)
+                    return null;
+                else
+                    throw;
             }
             catch (Exception ex)
             {

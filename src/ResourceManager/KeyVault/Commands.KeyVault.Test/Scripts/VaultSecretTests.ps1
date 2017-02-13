@@ -533,7 +533,8 @@ function Test_GetNonExistSecret
     $keyVault = Get-KeyVault
     $secretname= Get-SecretName 'notexistvault'
       
-    Assert-Throws {Get-AzureKeyVaultSecret -VaultName $keyVault -Name $secretname}
+    $secret = Get-AzureKeyVaultSecret -VaultName $keyVault -Name $secretname
+    Assert-Null $secret
 }
 
 <#
@@ -561,7 +562,8 @@ function Test_RemoveSecretWithoutPrompt
     $sec=Remove-AzureKeyVaultSecret -VaultName $keyVault -Name $secretname -Force -Confirm:$false -PassThru
     Assert-NotNull $sec
     
-    Assert-Throws { Get-AzureKeyVaultSecret -VaultName $keyVault -Name $secretname }    
+    $secret = Get-AzureKeyVaultSecret -VaultName $keyVault -Name $secretname
+    Assert-Null $secret
 }
 
 <#
@@ -597,7 +599,8 @@ function Test_RemoveSecretPositionalParameter
 
     Remove-AzureKeyVaultSecret $keyVault $secretname  -Force -Confirm:$false 
     
-    Assert-Throws {Get-AzureKeyVaultSecret -VaultName $keyVault -Name $secretname}    
+    $secret = Get-AzureKeyVaultSecret -VaultName $keyVault -Name $secretname
+    Assert-Null $secret
 }
 
 <#
@@ -615,7 +618,8 @@ function Test_RemoveSecretAliasParameter
 
     Remove-AzureKeyVaultSecret -VaultName $keyVault  -SecretName $secretname  -Force -Confirm:$false 
     
-    Assert-Throws {Get-AzureKeyVaultSecret -VaultName $keyVault -Name $secretname}               
+    $secret = Get-AzureKeyVaultSecret -VaultName $keyVault -Name $secretname
+    Assert-Null $secret            
 }
 
 <#
