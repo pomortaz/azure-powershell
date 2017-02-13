@@ -266,8 +266,8 @@ namespace Microsoft.Azure.Commands.KeyVault
                             throw new ArgumentException(string.Format(PSKeyVaultProperties.Resources.PermissionSetIncludesAllPlusOthers, "certificates"));
 
                         // Expand the permissions sets.
-                        if (PermissionsToKeys != null && PermissionsToKeys.Contains(KeyPerms.All, StringComparer.OrdinalIgnoreCase) 
-                            || PermissionsToSecrets != null && PermissionsToSecrets.Contains(SecretPerms.All, StringComparer.OrdinalIgnoreCase))
+                        if (PermissionsToKeys != null && PermissionsToKeys.Contains("all", StringComparer.OrdinalIgnoreCase) 
+                            || PermissionsToSecrets != null && PermissionsToSecrets.Contains("all", StringComparer.OrdinalIgnoreCase))
                         {
                             WriteWarning(PSKeyVaultProperties.Resources.AllPermissionExpansionWarning);
                         }

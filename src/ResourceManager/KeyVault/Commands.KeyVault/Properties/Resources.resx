@@ -351,4 +351,7 @@ You can find the object ID using Azure Active Directory Module for Windows Power
   <data name="AllPermissionExpansionWarning" xml:space="preserve">
     <value>The 'all' permission is being deprecated, and will be manually expanded to include all the permissions exluding 'purge'.</value>
   </data>
+  <data name="RecoverVault" xml:space="preserve">
+    <value>Recover vault</value>
+  </data>
 </root>

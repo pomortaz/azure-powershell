@@ -70,8 +70,10 @@
     <Compile Include="Commands\RemoveAzureKeyVaultCertificateOperation.cs" />
     <Compile Include="Commands\SetAzureKeyVaultCertificateIssuer.cs" />
     <Compile Include="Commands\SetAzureKeyVaultCertificatePolicy.cs" />
+    <Compile Include="Commands\UndoAzureKeyVaultRemoval.cs" />
     <Compile Include="Commands\UndoAzureKeyVaultKeyRemoval.cs" />
     <Compile Include="Commands\UndoAzureKeyVaultSecretRemoval.cs" />
+    <Compile Include="Microsoft\Azure\Commands\KeyVault\Models\PSDeletedVault.cs" />
     <Compile Include="Models\CertificateIdentityItem.cs" />
     <Compile Include="Commands\Constants.cs" />
     <Compile Include="Models\CertificateIssuerIdentityItem.cs" />
@@ -162,7 +164,7 @@
       <HintPath>..\..\..\packages\Microsoft.Azure.Graph.RBAC.3.2.0-preview\lib\net45\Microsoft.Azure.Graph.RBAC.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.KeyVault, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Microsoft.Azure.KeyVault.2.0.6\lib\net45\Microsoft.Azure.KeyVault.dll</HintPath>
+      <HintPath>..\..\..\packages\Microsoft.Azure.KeyVault.2.0.7-preview\lib\net45\Microsoft.Azure.KeyVault.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.WebKey, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -174,7 +176,7 @@
       <HintPath>..\..\..\packages\Microsoft.Azure.Management.Authorization.2.0.0\lib\net40\Microsoft.Azure.Management.Authorization.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Management.KeyVault, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Microsoft.Azure.Management.KeyVault.2.0.2\lib\net45\Microsoft.Azure.Management.KeyVault.dll</HintPath>
+      <HintPath>..\..\..\packages\Microsoft.Azure.Management.KeyVault.2.0.2-preview\lib\net45\Microsoft.Azure.Management.KeyVault.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Azure.ResourceManager, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">

@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Commands.KeyVault
                 VaultName,
                 () =>
                 {
-                    KeyVaultManagementClient.DeletVault(
+                    KeyVaultManagementClient.DeleteVault(
                 vaultName: VaultName,
                 resourceGroupName: this.ResourceGroupName);
                 });

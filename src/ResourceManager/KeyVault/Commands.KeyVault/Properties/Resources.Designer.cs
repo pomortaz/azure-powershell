@@ -478,6 +478,15 @@ namespace Microsoft.Azure.Commands.KeyVault.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recover vault.
+        /// </summary>
+        internal static string RecoverVault {
+            get {
+                return ResourceManager.GetString("RecoverVault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove certificate contact.
         /// </summary>
         internal static string RemoveCertificateContact {
