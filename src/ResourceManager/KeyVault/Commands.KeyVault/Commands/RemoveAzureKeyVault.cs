@@ -12,7 +12,6 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Microsoft.Azure.Commands.KeyVault.Models;
 using System;
 using System.Globalization;
 using System.Management.Automation;
@@ -30,7 +29,6 @@ namespace Microsoft.Azure.Commands.KeyVault
 
         private const string RemoveVaultParameterSet = "ByAvailableVault";
         private const string RemoveDeletedVaultParameterSet = "ByDeletedVault";
-        private const string InputObjectParameterSet = "InputObject"; // used to fix issue with pipelining
 
         #endregion
 
@@ -63,7 +61,7 @@ namespace Microsoft.Azure.Commands.KeyVault
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "The location of the deleted vault.")]
         [ValidateNotNullOrEmpty()]
-        public string Location { get; set; }
+        public string DeletedVaultLocation { get; set; }
 
         /// <summary>
         /// If present, do not ask for confirmation
@@ -80,15 +78,6 @@ namespace Microsoft.Azure.Commands.KeyVault
             HelpMessage = "Remove the previously deleted vault permanently.")]
         public SwitchParameter InRemovedState { get; set; }
 
-        /// <summary>
-        /// Used for pipelining
-        /// </summary>
-        [Parameter(Mandatory = true,
-            ParameterSetName = InputObjectParameterSet, 
-            ValueFromPipeline = true,
-            HelpMessage = "Vault object to be removed.")]
-        public PSVaultIdentityItem InputObject { get; set; }
-
         #endregion
 
         public override void ExecuteCmdlet()
@@ -99,7 +88,6 @@ namespace Microsoft.Azure.Commands.KeyVault
                     ResourceGroupName = string.IsNullOrWhiteSpace(ResourceGroupName) ? GetResourceGroupName(VaultName) : ResourceGroupName;
                     if (string.IsNullOrWhiteSpace(ResourceGroupName))
                         throw new ArgumentException(string.Format(PSKeyVaultProperties.Resources.VaultNotFound, VaultName, ResourceGroupName));
-
                     ConfirmAction(
                         Force.IsPresent,
                         string.Format(
@@ -134,7 +122,7 @@ namespace Microsoft.Azure.Commands.KeyVault
                         {
                             KeyVaultManagementClient.PurgeVault(
                                 vaultName: VaultName,
-                                location: Location);
+                                location: DeletedVaultLocation);
                         });
                     break;
                 default:

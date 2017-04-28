@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Commands.KeyVault
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "The location of the deleted vault.")]
         [ValidateNotNullOrEmpty()]
-        public string Location { get; set; }
+        public string DeletedVaultLocation { get; set; }
 
         [Parameter(Mandatory = true,
             ParameterSetName = GetDeletedVaultParameterSet,
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Commands.KeyVault
                     break;
 
                 case GetDeletedVaultParameterSet:
-                    WriteObject(KeyVaultManagementClient.GetDeletedVault(VaultName, Location));
+                    WriteObject(KeyVaultManagementClient.GetDeletedVault(VaultName, DeletedVaultLocation));
                     break;
 
                 case ListDeletedVaultsParameterSet:

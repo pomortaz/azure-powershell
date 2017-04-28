@@ -238,9 +238,9 @@ function Test-RecoverDeletedVault
     $allDeletedVault = Get-AzureRmKeyVault -InRemovedState
     Assert-True { $allDeletedVault.Count -gt 0 }
 
-    $deletedVault = Get-AzureRmKeyVault -VaultName  $vaultName -Location $location -InRemovedState
+    $deletedVault = Get-AzureRmKeyVault -VaultName  $vaultName -DeletedVaultLocation $location -InRemovedState
     Assert-AreEqual $vaultName $deletedVault.VaultName
-    Assert-AreEqual $location $deletedVault.Location
+    Assert-AreEqual $location $deletedVault.DeletedVaultLocation
     Assert-AreEqual "Standard" $vault.Sku
     Assert-NotNull $deletedVault.DeletionDate
     Assert-NotNull $deletedVault.ScheduledPurgeDate
@@ -262,7 +262,7 @@ Get not existing deleted vault
 #>
 function Test-GetNoneexistingDeletedVault
 {
-    $deletedVault = Get-AzureRmKeyVault -VaultName  'non-existing' -Location 'eastus2' -InRemovedState
+    $deletedVault = Get-AzureRmKeyVault -VaultName  'non-existing' -DeletedVaultLocation 'eastus2' -InRemovedState
     Assert-Null $deletedVault
 }
 
@@ -280,9 +280,9 @@ function Test-PurgeDeletedVault
     # Test
     New-AzureRmKeyVault -VaultName $vaultName -ResourceGroupName $rgname -Location $location -Sku standard -EnableSoftDelete -Tag @{"x"= "y"}
     Remove-AzureRmKeyVault -VaultName $vaultName -ResourceGroupName $rgname -Force -Confirm:$false
-    Remove-AzureRmKeyVault -VaultName $vaultName -Location $location -Force -Confirm:$false -InRemovedState
+    Remove-AzureRmKeyVault -VaultName $vaultName -DeletedVaultLocation $location -Force -Confirm:$false -InRemovedState
 
-    $deletedVault = Get-AzureRmKeyVault -VaultName  $vaultName -Location $location -InRemovedState
+    $deletedVault = Get-AzureRmKeyVault -VaultName  $vaultName -DeletedVaultLocation $location -InRemovedState
     Assert-Null $deletedVault
 }
 #-------------------------------------------------------------------------------------

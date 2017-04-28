@@ -290,7 +290,7 @@
               </ListItem> 
               <ListItem>
                 <Label>Location</Label>
-                <PropertyName>Location</PropertyName>
+                <PropertyName>DeletedVaultLocation</PropertyName>
               </ListItem>             
               <ListItem>
                 <Label>Id</Label>
